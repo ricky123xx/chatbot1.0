@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OIBSIP — Nova AI Chatbot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- Particle canvas -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- ── NAV ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-orb" aria-hidden="true">
+          <span>N</span>
+        </div>
+        <div>
+          <div class="brand-name">Nova <span class="brand-tag">AI</span></div>
+          <div class="brand-sub">OIBSIP Chatbot</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Online
+        </div>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle light/dark mode" aria-label="Toggle theme">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">✦ Powered by Python + Flask</div>
+      <h1 class="hero-title">
+        Meet <span class="glow-text">Nova</span>
+        <br />Your AI Companion
+      </h1>
+      <p class="hero-sub">
+        Smart conversations, instant answers, and a bit of fun — all from your browser.<br />
+        Ask anything: math, tech, time, jokes, and more.
+      </p>
+      <div class="hero-chips">
+        <span class="chip" onclick="sendQuick('Tell me a joke')">😄 Joke</span>
+        <span class="chip" onclick="sendQuick('What is Python?')">🐍 Python</span>
+        <span class="chip" onclick="sendQuick('What time is it?')">🕐 Time</span>
+        <span class="chip" onclick="sendQuick('Tell me a fact')">🌟 Fact</span>
+        <span class="chip" onclick="sendQuick('Calculate 25 * 4')">🧮 Math</span>
+      </div>
+      <a href="#chat" class="hero-cta">
+        Start Chatting
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="preview-bubble bot">
+        <div class="preview-avatar">N</div>
+        <div class="preview-msg">Hey! I'm Nova 👋 Ask me anything!</div>
+      </div>
+      <div class="preview-bubble user">
+        <div class="preview-msg">What is Flask?</div>
+        <div class="preview-avatar u">A</div>
+      </div>
+      <div class="preview-bubble bot">
+        <div class="preview-avatar">N</div>
+        <div class="preview-msg">Flask is a lightweight Python web framework 🌐 — and the backbone of this very chatbot!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CHAT ── -->
+  <section class="chat-section" id="chat">
+    <div class="chat-container">
+
+      <!-- Chat header -->
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-avatar">N</div>
+          <div>
+            <div class="chat-name">Nova</div>
+            <div class="chat-status"><span class="status-dot sm"></span> Always online</div>
+          </div>
+        </div>
+        <button class="clear-btn" id="clear-btn" title="Clear conversation">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          Clear
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Chat messages">
+        <!-- Welcome message injected by JS -->
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-bar" id="typing-bar" style="display:none" aria-live="polite">
+        <div class="typing-avatar">N</div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="typing-label">Nova is typing…</span>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <textarea
+          id="user-input"
+          class="chat-input"
+          placeholder="Message Nova…"
+          rows="1"
+          maxlength="500"
+          aria-label="Type your message"
+        ></textarea>
+        <div class="input-actions">
+          <span class="char-count" id="char-count">0 / 500</span>
+          <button class="send-btn" id="send-btn" title="Send message" aria-label="Send">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">What Nova can do</span>
+        <h2>Built for Real Conversations</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feat">
+          <div class="feat-icon">⚡</div>
+          <h3>Instant Responses</h3>
+          <p>No page reloads — messages appear instantly using the Fetch API and Flask backend.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">🧮</div>
+          <h3>Live Math</h3>
+          <p>Ask Nova to calculate anything. Powered by Python's <code>eval</code> with a secure whitelist.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">🧠</div>
+          <h3>Session Memory</h3>
+          <p>Nova remembers your last 20 exchanges within a session for contextual replies.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">💻</div>
+          <h3>Tech Knowledge</h3>
+          <p>Ask about Python, Flask, AI, APIs, Git, and more — Nova has answers ready.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">🌗</div>
+          <h3>Dark / Light Mode</h3>
+          <p>Toggle between dark glassmorphism and a clean light theme — your eyes, your choice.</p>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">📱</div>
+          <h3>Fully Responsive</h3>
+          <p>Chat on desktop, tablet, or mobile — the layout adapts beautifully to every screen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about-section" id="about">
+    <div class="container about-inner">
+      <div class="about-text">
+        <span class="eyebrow">About This Project</span>
+        <h2>OIBSIP Python Internship</h2>
+        <p>
+          Nova was built as part of the <strong>Oasis Infobyte Summer Internship Program (OIBSIP)</strong> — a hands-on internship where students develop real-world Python projects.
+        </p>
+        <p>
+          This chatbot demonstrates core skills: Flask routing, session management, JSON APIs, regex-based NLP, and modern frontend development — all packaged in a professional, deployable project.
+        </p>
+        <div class="about-tags">
+          <span>Python</span><span>Flask</span><span>HTML/CSS</span>
+          <span>JavaScript</span><span>REST API</span><span>NLP</span>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-label">Developer</div>
+        <div class="about-dev-name">Antariksh Dilkhush<br />Sawarbandhe</div>
+        <div class="about-role">Python Intern · OIBSIP</div>
+        <div class="about-divider"></div>
+        <div class="about-stat-row">
+          <div class="about-stat"><span>6</span> Files</div>
+          <div class="about-stat"><span>30+</span> Responses</div>
+          <div class="about-stat"><span>100%</span> Python</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-orb sm" aria-hidden="true"><span>N</span></div>
+        <span>Nova AI</span>
+      </div>
+      <p class="footer-dev">Developed by <strong>Antariksh Dilkhush Sawarbandhe</strong></p>
+      <p class="footer-org">OIBSIP Python Programming Internship · Oasis Infobyte</p>
+      <p class="footer-note">Built with Python, Flask &amp; ❤️ · No data stored</p>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
